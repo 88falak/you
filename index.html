@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxe Salon — Appointment Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <div class="header-logo">
+          <span class="logo-icon">&#10022;</span>
+          <span class="logo-text">Luxe Salon</span>
+        </div>
+        <p class="header-tagline">Appointment Manager</p>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+
+        <!-- Hero Image -->
+        <section class="hero">
+          <img
+            src="https://images.pexels.com/photos/7195805/pexels-photo-7195805.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            alt="Modern beauty salon interior with styling chairs and warm lighting"
+            class="hero-img"
+          />
+          <div class="hero-overlay">
+            <h1 class="hero-title">Book Your Beauty</h1>
+            <p class="hero-subtitle">Schedule your next salon visit in seconds</p>
+          </div>
+        </section>
+
+        <!-- AI Service Recommendation -->
+        <section class="ai-card" id="aiSection">
+          <div class="ai-header">
+            <h2 class="ai-title">AI Service Recommendation</h2>
+            <span class="ai-badge">Prototype</span>
+          </div>
+          <p class="ai-note">
+            Upload a photo and our simulated assistant will suggest services for you.
+            This is a beginner prototype — the analysis is not medically or professionally accurate.
+          </p>
+
+          <div class="ai-upload-area">
+            <input type="file" id="photoInput" accept="image/*" hidden />
+            <button type="button" class="btn btn-gold" id="uploadBtn">Upload Your Photo</button>
+            <button type="button" class="btn btn-primary" id="analyzeBtn" disabled>Analyze My Needs</button>
+          </div>
+
+          <div class="photo-preview" id="photoPreview" style="display:none">
+            <img id="previewImg" alt="Uploaded preview" />
+            <button type="button" class="btn btn-ghost btn-sm" id="removePhoto">Remove</button>
+          </div>
+
+          <div class="ai-loading" id="aiLoading" style="display:none">
+            <div class="spinner"></div>
+            <p>Analyzing your photo…</p>
+          </div>
+
+          <div class="ai-recommendations" id="recommendations" style="display:none">
+            <h3 class="rec-heading">Recommended for you</h3>
+            <div class="rec-grid" id="recGrid"></div>
+          </div>
+        </section>
+
+        <!-- Booking Form -->
+        <section class="form-card" id="formSection">
+          <h2 class="form-title" id="formTitle">New Appointment</h2>
+          <form id="appointmentForm" novalidate>
+            <input type="hidden" id="editId" />
+            <div class="form-grid">
+              <div class="field">
+                <label for="customerName">Customer Name</label>
+                <input type="text" id="customerName" placeholder="e.g. Jane Smith" autocomplete="off" />
+                <span class="error-msg" id="err-name"></span>
+              </div>
+              <div class="field">
+                <label for="service">Service</label>
+                <select id="service">
+                  <option value="">Select a service</option>
+                  <option>Haircut &amp; Blowout</option>
+                  <option>Hair Coloring</option>
+                  <option>Highlights</option>
+                  <option>Balayage</option>
+                  <option>Keratin Treatment</option>
+                  <option>Manicure</option>
+                  <option>Pedicure</option>
+                  <option>Facial</option>
+                  <option>Eyebrow Threading</option>
+                  <option>Waxing</option>
+                </select>
+                <span class="error-msg" id="err-service"></span>
+              </div>
+              <div class="field">
+                <label for="date">Date</label>
+                <input type="date" id="date" />
+                <span class="error-msg" id="err-date"></span>
+              </div>
+              <div class="field">
+                <label for="time">Time</label>
+                <input type="time" id="time" />
+                <span class="error-msg" id="err-time"></span>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="submitBtn">Add Appointment</button>
+              <button type="button" class="btn btn-ghost" id="cancelBtn" style="display:none">Cancel</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Appointments List -->
+        <section class="list-section">
+          <div class="list-header">
+            <h2 class="list-title">Upcoming Appointments</h2>
+            <span class="appointment-count" id="appointmentCount">0 appointments</span>
+          </div>
+
+          <div id="emptyState" class="empty-state">
+            <div class="empty-icon">&#128344;</div>
+            <p>No appointments yet.</p>
+            <p class="empty-sub">Fill in the form above to book one.</p>
+          </div>
+
+          <ul class="appointment-list" id="appointmentList"></ul>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-icon">&#9888;</div>
+        <h3 class="modal-title">Delete Appointment?</h3>
+        <p class="modal-body">This action cannot be undone.</p>
+        <div class="modal-actions">
+          <button class="btn btn-danger" id="confirmDelete">Yes, Delete</button>
+          <button class="btn btn-ghost" id="cancelDelete">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
