@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxe Salon — Appointment Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-inner">
+        <div class="header-logo">
+          <span class="logo-icon">&#10022;</span>
+          <span class="logo-text">Luxe Salon</span>
+        </div>
+        <p class="header-tagline">Appointment Manager</p>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+
+        <!-- Hero Image -->
+        <section class="hero">
+          <img
+            src="https://images.pexels.com/photos/7195805/pexels-photo-7195805.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            alt="Modern beauty salon interior with styling chairs and warm lighting"
+            class="hero-img"
+          />
+          <div class="hero-overlay">
+            <h1 class="hero-title">Book Your Beauty</h1>
+            <p class="hero-subtitle">Schedule your next salon visit in seconds</p>
+          </div>
+        </section>
+
+        <!-- Customer Registration & Phone Verification -->
+        <section class="register-card" id="registerSection">
+          <div class="register-header">
+            <h2 class="register-title">Customer Registration</h2>
+            <span class="register-badge" id="registerBadge">Step 1 of 2</span>
+          </div>
+
+          <!-- Step 1: Registration form -->
+          <div id="registerStep">
+            <p class="register-note">
+              Please register before booking an appointment. We'll send a verification code to your phone.
+            </p>
+            <form id="registerForm" novalidate>
+              <div class="register-grid">
+                <div class="field">
+                  <label for="regName">Full Name</label>
+                  <input type="text" id="regName" placeholder="e.g. Noura Al-Otaibi" autocomplete="off" />
+                  <span class="error-msg" id="err-reg-name"></span>
+                </div>
+                <div class="field">
+                  <label for="regPhone">Saudi Mobile Number</label>
+                  <input type="tel" id="regPhone" placeholder="e.g. 0551234567" autocomplete="off" />
+                  <span class="error-msg" id="err-reg-phone"></span>
+                </div>
+                <div class="field">
+                  <label for="regEmail">Email (optional)</label>
+                  <input type="email" id="regEmail" placeholder="e.g. noura@example.com" autocomplete="off" />
+                  <span class="error-msg" id="err-reg-email"></span>
+                </div>
+              </div>
+              <div class="register-actions">
+                <button type="submit" class="btn btn-gold" id="sendCodeBtn">Send Verification Code</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Step 2: OTP verification -->
+          <div id="otpStep" style="display:none">
+            <div class="otp-info">
+              <p class="otp-message">
+                Enter the 6-digit code sent to <strong id="otpPhoneDisplay"></strong>
+              </p>
+              <p class="otp-demo-note" id="otpDemoNote">
+                Prototype mode: your code is <strong id="demoCode"></strong>. No real SMS is sent.
+              </p>
+            </div>
+            <div class="otp-boxes" id="otpBoxes">
+              <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+              <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+              <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+              <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+              <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+              <input type="text" inputmode="numeric" maxlength="1" class="otp-input" />
+            </div>
+            <span class="error-msg" id="err-otp"></span>
+            <div class="otp-actions">
+              <button type="button" class="btn btn-primary" id="verifyBtn">Verify Code</button>
+              <button type="button" class="btn btn-ghost" id="resendBtn">Resend Code</button>
+              <button type="button" class="btn btn-ghost" id="backToRegister">Back</button>
+            </div>
+          </div>
+
+          <!-- Verified state -->
+          <div id="verifiedStep" style="display:none">
+            <div class="verified-banner">
+              <span class="verified-icon">&#10003;</span>
+              <div>
+                <p class="verified-title">Phone Number Verified</p>
+                <p class="verified-detail" id="verifiedCustomerInfo"></p>
+              </div>
+            </div>
+            <div class="otp-actions">
+              <button type="button" class="btn btn-ghost" id="changeNumberBtn">Change Number</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- AI Beauty Consultation -->
+        <section class="ai-card" id="aiSection">
+          <div class="ai-header">
+            <h2 class="ai-title">AI Beauty Consultation</h2>
+            <span class="ai-badge">Prototype</span>
+          </div>
+          <p class="ai-note">
+            Upload a photo, choose your beauty goals, and our simulated assistant will suggest a personalized plan.
+            This is a beginner prototype — the photo is not professionally or medically analyzed.
+          </p>
+
+          <!-- Step 1: Upload Photo -->
+          <div class="consult-step">
+            <div class="step-label">Step 1 — Upload Your Photo</div>
+            <div class="ai-upload-area">
+              <input type="file" id="photoInput" accept="image/jpeg,image/jpg,image/png" hidden />
+              <button type="button" class="btn btn-gold" id="uploadBtn">Upload Your Photo</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="changePhotoBtn" style="display:none">Change Photo</button>
+            </div>
+            <p class="upload-formats">Accepted formats: JPG, JPEG, PNG</p>
+            <p class="upload-privacy">Your photo is used only for this prototype consultation and is not stored or shared.</p>
+
+            <div class="photo-preview" id="photoPreview" style="display:none">
+              <img id="previewImg" alt="Uploaded preview" />
+              <button type="button" class="btn btn-ghost btn-sm" id="removePhoto">Remove</button>
+            </div>
+          </div>
+
+          <!-- Step 2: Choose Beauty Goal -->
+          <div class="consult-step" id="goalStep" style="display:none">
+            <div class="step-label">Step 2 — What would you like to improve or achieve?</div>
+            <div class="goal-grid" id="goalGrid">
+              <button type="button" class="goal-card" data-goal="hair">💇 <span>Hair</span></button>
+              <button type="button" class="goal-card" data-goal="nails">💅 <span>Nails</span></button>
+              <button type="button" class="goal-card" data-goal="makeup">💄 <span>Makeup</span></button>
+              <button type="button" class="goal-card" data-goal="facial">✨ <span>Facial</span></button>
+              <button type="button" class="goal-card" data-goal="spa">🧖 <span>Spa</span></button>
+            </div>
+            <span class="error-msg" id="err-goals"></span>
+          </div>
+
+          <!-- Analyze Button -->
+          <div class="consult-step" id="analyzeStep" style="display:none">
+            <button type="button" class="btn btn-primary btn-analyze" id="analyzeBtn">✨ Analyze My Needs</button>
+          </div>
+
+          <!-- Loading -->
+          <div class="ai-loading" id="aiLoading" style="display:none">
+            <div class="spinner"></div>
+            <p>Creating your personalized beauty plan…</p>
+          </div>
+
+          <!-- Step 3: Recommendations -->
+          <div class="ai-recommendations" id="recommendations" style="display:none">
+            <h3 class="rec-heading">✨ Your Personalized Beauty Plan</h3>
+            <div class="rec-grid" id="recGrid"></div>
+          </div>
+
+          <!-- Step 4: Beauty Plan Summary -->
+          <div class="beauty-plan" id="beautyPlan">
+            <div class="plan-header">
+              <h3 class="plan-heading">✨ My Beauty Plan</h3>
+              <button type="button" class="btn btn-ghost btn-sm" id="clearPlanBtn" style="display:none">Clear All</button>
+            </div>
+
+            <div class="plan-empty" id="planEmpty">
+              <div class="plan-empty-icon">&#10024;</div>
+              <p>No services selected yet.</p>
+              <p class="plan-empty-sub">Choose services from the recommendations above to build your plan.</p>
+            </div>
+
+            <div class="plan-items" id="planItems"></div>
+
+            <div class="plan-totals" id="planTotals" style="display:none">
+              <div class="plan-total-row">
+                <span>Estimated Time:</span>
+                <span id="planTotalDuration">0 min</span>
+              </div>
+              <div class="plan-total-row">
+                <span>Total Price:</span>
+                <span id="planTotalPrice">0 SAR</span>
+              </div>
+            </div>
+
+            <div class="plan-actions" id="planActions" style="display:none">
+              <button type="button" class="btn btn-gold" id="continueToBookingBtn">Continue to Booking</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Booking Form -->
+        <section class="form-card" id="formSection">
+          <h2 class="form-title" id="formTitle">New Appointment</h2>
+          <div class="booking-customer-banner" id="bookingCustomerBanner" style="display:none">
+            <span class="booking-customer-label">Booking for:</span>
+            <span class="booking-customer-info" id="bookingCustomerInfo"></span>
+          </div>
+          <form id="appointmentForm" novalidate>
+            <input type="hidden" id="editId" />
+            <div class="form-grid">
+              <div class="field">
+                <label for="customerName">Customer Name</label>
+                <input type="text" id="customerName" placeholder="e.g. Jane Smith" autocomplete="off" />
+                <span class="error-msg" id="err-name"></span>
+              </div>
+              <div class="field">
+                <label for="service">Service</label>
+                <select id="service">
+                  <option value="">Select a service</option>
+                  <option>Haircut &amp; Blowout</option>
+                  <option>Hair Coloring</option>
+                  <option>Highlights</option>
+                  <option>Balayage</option>
+                  <option>Keratin Treatment</option>
+                  <option>Manicure</option>
+                  <option>Pedicure</option>
+                  <option>Facial</option>
+                  <option>Eyebrow Threading</option>
+                  <option>Waxing</option>
+                </select>
+                <span class="error-msg" id="err-service"></span>
+              </div>
+              <div class="field">
+                <label for="date">Date</label>
+                <input type="date" id="date" />
+                <span class="error-msg" id="err-date"></span>
+              </div>
+              <div class="field">
+                <label for="time">Time</label>
+                <input type="time" id="time" />
+                <span class="error-msg" id="err-time"></span>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="submitBtn">Add Appointment</button>
+              <button type="button" class="btn btn-ghost" id="cancelBtn" style="display:none">Cancel</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Booking Confirmation -->
+        <section class="confirmation-card" id="confirmationSection" style="display:none">
+          <div class="confirmation-check">&#10003;</div>
+          <h2 class="confirmation-title">Appointment Confirmed</h2>
+          <div class="confirmation-grid" id="confirmationDetails"></div>
+          <div class="confirmation-actions">
+            <button type="button" class="btn btn-primary" id="viewAppointmentsBtn">View My Appointments</button>
+            <button type="button" class="btn btn-gold" id="bookAnotherBtn">Book Another Appointment</button>
+          </div>
+        </section>
+
+        <!-- My Appointments -->
+        <section class="list-section" id="myAppointmentsSection">
+          <div class="list-header">
+            <h2 class="list-title">My Appointments</h2>
+            <span class="appointment-count" id="appointmentCount">0 appointments</span>
+          </div>
+
+          <div class="tab-bar" id="tabBar">
+            <button type="button" class="tab-btn active" data-tab="upcoming">Upcoming</button>
+            <button type="button" class="tab-btn" data-tab="completed">Completed</button>
+            <button type="button" class="tab-btn" data-tab="cancelled">Cancelled</button>
+          </div>
+
+          <div id="emptyState" class="empty-state">
+            <div class="empty-icon">&#128344;</div>
+            <p id="emptyStateText">No upcoming appointments</p>
+            <p class="empty-sub">Fill in the form above to book one.</p>
+            <button type="button" class="btn btn-gold" id="bookFirstBtn" style="margin-top:16px">Book Your First Appointment</button>
+          </div>
+
+          <ul class="appointment-list" id="appointmentList"></ul>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-icon">&#9888;</div>
+        <h3 class="modal-title" id="modalTitle">Delete Appointment?</h3>
+        <p class="modal-body" id="modalBody">This action cannot be undone.</p>
+        <div class="modal-actions">
+          <button class="btn btn-danger" id="confirmDelete">Yes, Delete</button>
+          <button class="btn btn-ghost" id="cancelDelete">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reschedule Modal -->
+    <div class="modal-overlay" id="rescheduleOverlay">
+      <div class="modal">
+        <div class="modal-icon reschedule-icon">&#128197;</div>
+        <h3 class="modal-title">Reschedule Appointment</h3>
+        <p class="modal-body">Choose a new date and time for your appointment.</p>
+        <div class="reschedule-form">
+          <div class="field">
+            <label for="rescheduleDate">New Date</label>
+            <input type="date" id="rescheduleDate" />
+          </div>
+          <div class="field">
+            <label for="rescheduleTime">New Time</label>
+            <input type="time" id="rescheduleTime" />
+          </div>
+          <span class="error-msg" id="err-reschedule"></span>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-gold" id="confirmReschedule">Confirm Reschedule</button>
+          <button class="btn btn-ghost" id="cancelReschedule">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
