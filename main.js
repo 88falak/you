@@ -13,6 +13,7 @@ const RECOMMENDATIONS = [
   },
   {
     name: 'Hair Coloring',
+
     desc: 'Add richness and depth with a full color treatment suited to your tone.',
   },
   {
@@ -363,3 +364,18 @@ recGrid.addEventListener('click', e => {
 
 // ===== Initial Render =====
 render();
+const uploadBtn = document.getElementById('uploadBtn');
+const photoInput = document.getElementById('photoInput');
+
+uploadBtn.addEventListener('click', () => {
+    photoInput.click();
+});
+
+photoInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+        uploadedPhotoURL = URL.createObjectURL(file);
+        console.log('Photo uploaded:', file.name);
+    }
+});
